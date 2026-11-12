@@ -1,6 +1,11 @@
+import Navbar from './components/Navbar'
+
 function App() {
   return (
-    <h1>Merhaba, ben Göktuğ</h1>
+    <>
+      <Navbar />
+      <h1>Merhaba, ben Göktuğ</h1>
+    </>
   )
 }
 
