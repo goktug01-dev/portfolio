@@ -1,11 +1,11 @@
 const skills = [
-  'C',
+  'TechOps',
   'ROS 2',
   'EMBEDDED SOFTWARE',
   'IMAGE PROCESSING',
   '01 ADANA 01',
   'AUTONOMOUS VEHICLES',
-  'GIT',
+  'İEEE İKÇÜ',
   'GITHUB',
 ]
 
