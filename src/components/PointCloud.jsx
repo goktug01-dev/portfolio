@@ -37,8 +37,8 @@ function Terrain() {
       const x = pos.getX(i)
       const z = pos.getZ(i)
       const dist = Math.sqrt(x * x + z * z)
-      const wave = Math.sin(dist * 1.6 - t * 1.5) * 0.18
-      const hills = Math.sin(x * 0.7 + t * 0.3) * Math.cos(z * 0.7) * 0.35
+     const wave = Math.sin(dist * 1.6 - t * 0.8) * 0.08
+     const hills = Math.sin(x * 0.7 + t * 0.15) * Math.cos(z * 0.7) * 0.2
       pos.setY(i, wave + hills)
     }
     pos.needsUpdate = true
@@ -47,11 +47,11 @@ function Terrain() {
   })
 
   return (
-    <points ref={pointsRef}>
+    <points ref={pointsRef} position={[0, -0.8, 0.35]}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.04} color="#111111" sizeAttenuation />
+      <pointsMaterial size={0.035} color="#111111" sizeAttenuation />
     </points>
   )
 }
