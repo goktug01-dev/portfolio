@@ -4,8 +4,7 @@
   --cream: #ece6d6;
   --card: #f6f1e4;
   --ink: #111111;
-  --accent: #ff4d1a;
-}
+  --accent: #ff4d1a;}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -42,6 +41,8 @@ nav {
   border-bottom: 2px solid var(--ink);
 }
 nav h2 { font-size: 1.2rem; }
+.nav-brand { display: flex; align-items: center; gap: 0.6rem; }
+.nav-brand img { border: 2px solid var(--ink); }
 nav ul { display: flex; gap: 0.5rem; list-style: none; }
 nav a {
   padding: 0.3rem 0.8rem; font-weight: 700;
@@ -49,6 +50,19 @@ nav a {
   border: 2px solid transparent;
 }
 nav a:hover { background: var(--ink); color: var(--cream); }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.lang-switch { display: flex; border: 2px solid var(--ink); }
+.lang-switch button {
+  font: inherit; font-weight: 700; font-size: 0.8rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--cream); color: var(--ink);
+  border: 0; cursor: pointer;
+}
+.lang-switch button + button { border-left: 2px solid var(--ink); }
+.lang-switch button:hover { background: var(--accent); }
+.lang-switch button[aria-pressed='true'] { background: var(--ink); color: var(--cream); }
+.lang-switch button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* Hero */
 #hero {
@@ -65,7 +79,6 @@ nav a:hover { background: var(--ink); color: var(--cream); }
   padding: 4rem 1.5rem;
   display: grid; grid-template-columns: 1.5fr 1fr;
   gap: 3rem; align-items: center;
-  .pointcloud { position: absolute; inset: 0; z-index: 0; opacity: 0.5; }
 }
 .label {
   display: inline-block; padding: 0.3rem 0.7rem;
@@ -77,7 +90,11 @@ nav a:hover { background: var(--ink); color: var(--cream); }
   line-height: 0.9; letter-spacing: -0.02em;
   margin: 1.2rem 0;
 }
-.hero-desc { max-width: 520px; font-size: 1.05rem; margin-bottom: 2rem; }
+.hero-desc {
+  max-width: 520px; font-size: 1.05rem; margin-bottom: 2rem;
+  /* cream halo keeps the text readable where the point cloud passes behind it */
+  text-shadow: 0 0 3px var(--cream), 0 0 6px var(--cream), 0 0 10px var(--cream), 0 0 14px var(--cream);
+}
 .btn {
   display: inline-block; padding: 1rem 1.6rem;
   background: var(--accent); border: 2px solid var(--ink);
@@ -136,26 +153,33 @@ nav a:hover { background: var(--ink); color: var(--cream); }
   transition: transform 0.15s, box-shadow 0.15s;
 }
 .card:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0 var(--ink); }
-.card h3 { font-size: 1.15rem; margin: 0.8rem 0 0.5rem; }
+/* Archivo Black merges the dot of "i" into the stem at small sizes; a bit more size and spacing keeps i/ı distinct */
+.card h3 { font-size: 1.3rem; letter-spacing: 0.02em; line-height: 1.3; margin: 0.8rem 0 0.5rem; }
 .card p { font-size: 0.92rem; }
+.card-img {
+  display: block; width: 100%;
+  aspect-ratio: 16 / 10; object-fit: cover; object-position: top;
+  border: 2px solid var(--ink);
+  margin-top: 1.2rem;
+}
+/* About cards stay flat so the project cards stand out */
+.highlights .card,
+.highlights .card:hover { box-shadow: none; transform: none; }
 .card a {
   display: inline-block; margin-top: 1rem; font-weight: 700;
   border-bottom: 2px solid var(--accent);
-}
-.num {
-  display: inline-block; padding: 0 0.5rem;
-  background: var(--accent); border: 2px solid var(--ink);
-  font-weight: 700; font-size: 0.8rem;
 }
 
 /* Contact */
 .contact-links { display: flex; flex-wrap: wrap; gap: 1.2rem; margin-top: 2rem; }
 .contact-links a {
+  display: inline-flex; align-items: center; gap: 0.7rem;
   padding: 1rem 1.8rem; background: var(--card);
   border: 2px solid var(--ink); box-shadow: 6px 6px 0 var(--ink);
   font-weight: 700; text-transform: uppercase;
   transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
 }
+.contact-links svg { width: 1.3rem; height: 1.3rem; flex-shrink: 0; }
 .contact-links a:hover {
   background: var(--accent);
   transform: translate(4px, 4px); box-shadow: 2px 2px 0 var(--ink);
@@ -170,8 +194,9 @@ footer {
 @media (max-width: 800px) {
   nav { flex-direction: column; gap: 0.5rem; }
   nav ul { flex-wrap: wrap; justify-content: center; }
-  .hero-content { display: grid; grid-template-columns: 1.5fr minmax(0, 1fr); }
-  .hero-photo { max-width: 320px; box-shadow: 8px 8px 0 var(--ink); }
+  .nav-right { flex-wrap: wrap; justify-content: center; }
+  .hero-content { grid-template-columns: minmax(0, 1fr); gap: 3.5rem; padding: 3rem 1.25rem 4rem; }
+  .hero-photo { max-width: 280px; box-shadow: 8px 8px 0 var(--ink); }
   section { padding: 4rem 1.25rem; }
 }
 
