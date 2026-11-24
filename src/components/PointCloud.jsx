@@ -3,6 +3,8 @@ import { Canvas, useFrame } from '@react-three/fiber'
 
 const SIZE = 70
 const SPACING = 0.12
+const PULSE_SPEED = 1.4 // units per second
+const PULSE_RANGE = 6 // a new pulse starts once the last one reaches the edge
 
 function Terrain() {
   const pointsRef = useRef()
@@ -33,13 +35,15 @@ function Terrain() {
   useFrame((state) => {
     const t = state.clock.elapsedTime
     const pos = pointsRef.current.geometry.attributes.position
+    const pulse = (t * PULSE_SPEED) % PULSE_RANGE
     for (let i = 0; i < pos.count; i++) {
       const x = pos.getX(i)
       const z = pos.getZ(i)
       const dist = Math.sqrt(x * x + z * z)
-     const wave = Math.sin(dist * 1.6 - t * 0.8) * 0.08
-     const hills = Math.sin(x * 0.7 + t * 0.15) * Math.cos(z * 0.7) * 0.2
-      pos.setY(i, wave + hills)
+      // LiDAR-style pulse: a ring that leaves the centre and spreads outward
+      const ring = Math.exp(-((dist - pulse) ** 2) / 0.04) * 0.22 * (1 - pulse / PULSE_RANGE)
+      const hills = Math.sin(x * 0.7 + t * 0.15) * Math.cos(z * 0.7) * 0.2
+      pos.setY(i, ring + hills)
     }
     pos.needsUpdate = true
     pointsRef.current.rotation.y = t * 0.05 + mouse.current.x * 0.4

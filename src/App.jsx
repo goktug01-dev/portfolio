@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { LangContext, initialLang } from './lang'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Marquee from './components/Marquee'
@@ -7,8 +9,16 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 function App() {
+  const [lang, setLang] = useState(initialLang)
+
+  useEffect(() => {
+    // lang="tr" also makes CSS uppercase turn i into İ correctly
+    document.documentElement.lang = lang
+    localStorage.setItem('lang', lang)
+  }, [lang])
+
   return (
-    <>
+    <LangContext.Provider value={{ lang, setLang }}>
       <Navbar />
       <Hero />
       <Marquee />
@@ -16,7 +26,7 @@ function App() {
       <Projects />
       <Contact />
       <Footer />
-    </>
+    </LangContext.Provider>
   )
 }
 
